@@ -1,67 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:expense_tracker/widgets/expenses.dart';
-import 'package:flutter/services.dart';
+import 'package:montra/widgets/transactions.dart'; // Importing the Transactions widget from another file
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp
-  // ]).then((fn) {
-    runApp(const MyApp());
-  // });
-
+  runApp(const MyApp());
 }
 
+// Define color schemes for light and dark themes
 var kColorScheme = ColorScheme.fromSeed(seedColor: const Color.fromARGB(
     255, 144, 238, 144));
 
 var kDarkColorScheme = ColorScheme.fromSeed(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(
-    255, 144, 238, 144));
+        255, 144, 238, 144));
 
+// Define the main application widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      darkTheme: ThemeData.dark().copyWith(
-        useMaterial3: true,
-        colorScheme: kDarkColorScheme,
-        cardTheme:const CardTheme().copyWith(
+      // Define the dark theme settings
+      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+        colorScheme: kDarkColorScheme, // Set the color scheme for dark theme
+        cardTheme: const CardTheme().copyWith(
             color: kDarkColorScheme.secondaryContainer,
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
-        ),
+        ), // Customize the card theme for dark mode
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              backgroundColor: kDarkColorScheme.primaryContainer,
-              foregroundColor: kDarkColorScheme.onPrimaryContainer,
+            backgroundColor: kDarkColorScheme.primaryContainer, // Set the button background color
+            foregroundColor: kDarkColorScheme.onPrimaryContainer, // Set the button text color
           ),
-        ),
+        ), // Customize the elevated button theme for dark mode
       ),
-      theme: ThemeData().copyWith(
-        useMaterial3: true,
-        colorScheme: kColorScheme,
+      // Define the light theme settings
+      theme: ThemeData(useMaterial3: true).copyWith(
+        colorScheme: kColorScheme, // Set the color scheme for light theme
         appBarTheme: const AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.onPrimaryContainer,
-          foregroundColor: kColorScheme.primaryContainer
-        ),
-        cardTheme:const CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
-        ),
+            backgroundColor: kColorScheme.onPrimaryContainer,
+            foregroundColor: kColorScheme.primaryContainer
+        ), // Customize the app bar theme for light mode
+        cardTheme: const CardTheme().copyWith(
+            color: kColorScheme.secondaryContainer,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+        ), // Customize the card theme for light mode
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-             backgroundColor: kColorScheme.primaryContainer
+              backgroundColor: kColorScheme.primaryContainer
           ),
-        ),
-
+        ), // Customize the elevated button theme for light mode
       ),
-      debugShowCheckedModeBanner: false,
-
-        home: const Expenses()
+      debugShowCheckedModeBanner: false, // Disable debug banner
+      home: const Transactions(), // Set the home screen to the Transactions widget
     );
   }
 }

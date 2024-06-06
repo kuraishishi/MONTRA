@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-
-import 'package:expense_tracker/widgets/chart/chart_bar.dart';
-import 'package:expense_tracker/models/expense.dart';
+import 'package:montra/widgets/chart/chart_bar.dart'; // Import the ChartBar widget
+import 'package:montra/models/transaction.dart'; // Import the Transaction model
 
 class Chart extends StatelessWidget {
-  const Chart({super.key, required this.expenses});
+  const Chart({super.key, required this.transactions});
 
-  final List<Expense> expenses;
+  final List<Transaction> transactions; // List of transactions to be displayed in the chart
 
-  List<ExpenseBucket> get buckets {
+  // Get a list of transaction buckets based on categories
+  List<TransactionBucket> get buckets {
     return [
-      ExpenseBucket.forCategory(expenses, Category.food),
-      ExpenseBucket.forCategory(expenses, Category.leisure),
-      ExpenseBucket.forCategory(expenses, Category.travel),
-      ExpenseBucket.forCategory(expenses, Category.work),
+      TransactionBucket.forCategory(transactions, Category.food),
+      TransactionBucket.forCategory(transactions, Category.leisure),
+      TransactionBucket.forCategory(transactions, Category.travel),
+      TransactionBucket.forCategory(transactions, Category.work),
     ];
   }
 
+  // Get the maximum total expense among all buckets
   double get maxTotalExpense {
     double maxTotalExpense = 0;
 
@@ -32,24 +33,25 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
+        MediaQuery.of(context).platformBrightness == Brightness.dark; // Check if the current theme is dark mode
+
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16), // Set margin for the container
       padding: const EdgeInsets.symmetric(
         vertical: 16,
         horizontal: 8,
-      ),
-      width: double.infinity,
-      height: 180,
+      ), // Set padding for the container
+      width: double.infinity, // Make the container take the full width available
+      height: 180, // Set the height of the container
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8), // Apply border radius to the container
         gradient: LinearGradient(
           colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            Theme.of(context).colorScheme.primary.withOpacity(0.3), // Apply gradient color scheme
             Theme.of(context).colorScheme.primary.withOpacity(0.0)
           ],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
+          begin: Alignment.bottomCenter, // Set gradient start position
+          end: Alignment.topCenter, // Set gradient end position
         ),
       ),
       child: Column(
@@ -58,26 +60,26 @@ class Chart extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                for (final bucket in buckets) // alternative to map()
+                for (final bucket in buckets)
                   ChartBar(
                     fill: bucket.totalExpenses == 0
                         ? 0
-                        : bucket.totalExpenses / maxTotalExpense,
+                        : bucket.totalExpenses / maxTotalExpense, // Calculate fill percentage for each chart bar
                   )
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 12), // Add some vertical space
           Row(
             children: buckets
                 .map(
                   (bucket) => Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 4), // Set padding for each icon
                   child: Icon(
-                    categoryIcons[bucket.category],
+                    categoryIcons[bucket.category], // Get the icon for the category
                     color: isDarkMode
-                        ? Theme.of(context).colorScheme.secondary
+                        ? Theme.of(context).colorScheme.secondary // Set icon color based on dark or light mode
                         : Theme.of(context)
                         .colorScheme
                         .primary
