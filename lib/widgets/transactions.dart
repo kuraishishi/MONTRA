@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:montra/main.dart'; // Importing the main.dart file
 import 'package:montra/widgets/chart/chart.dart'; // Importing the chart widget
-import 'package:montra/widgets/transactions_list/transactions_list.dart'; // Importing the transactions list widget
 import 'package:montra/widgets/new_transaction.dart'; // Importing the new transaction widget
 import 'package:flutter/material.dart';
 import '../models/transaction.dart'; // Importing the transaction model
@@ -89,14 +88,6 @@ class _TransactionsState extends State<Transactions> {
     await _transactionsStorage.saveTransactions(_registeredTransactions);
   }
 
-  // Remove a transaction from the list and save changes
-  void _removeTransaction(Transaction transaction) {
-    setState(() {
-      _registeredTransactions.remove(transaction);
-    });
-    _transactionsStorage.saveTransactions(_registeredTransactions);
-  }
-
   // Open the add transaction overlay
   void _openAddTransactionOverlay() {
     showModalBottomSheet(
@@ -127,16 +118,7 @@ class _TransactionsState extends State<Transactions> {
 
     // Initialize mainContent widget
     Widget mainContent = const Center(
-      child: Text('No transactions found. Start adding some!'),
     );
-
-    // Display transactions list if there are any
-    if (filteredTransactions.isNotEmpty) {
-      mainContent = TransactionsList(
-        transactions: filteredTransactions,
-        onRemoveTransaction: _removeTransaction, // Pass the removal handler here
-      );
-    }
 
     final width = MediaQuery.of(context).size.width; // Get the device width
 
@@ -202,7 +184,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '\$${calculateTotalIncome(filteredTransactions).toStringAsFixed(2)}',
+                    'Rp.${calculateTotalIncome(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
@@ -212,7 +194,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '\$${calculateTotalExpense(filteredTransactions).toStringAsFixed(2)}',
+                    'Rp.${calculateTotalExpense(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
@@ -222,7 +204,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '\$${calculateBalance(filteredTransactions).toStringAsFixed(2)}',
+                    'Rp.${calculateBalance(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -276,8 +258,8 @@ class TransactionsDetailPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final transaction = transactions[index];
           final amountText = transaction.type == TransactionType.income
-              ? '+\$${transaction.amount}'
-              : '-\$${transaction.amount}';
+              ? '+Rp.${transaction.amount}'
+              : '-Rp.${transaction.amount}';
           final formattedDate = DateFormat.yMMMd().format(transaction.date);
 
           return ListTile(
