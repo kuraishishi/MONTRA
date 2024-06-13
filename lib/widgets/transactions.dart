@@ -258,8 +258,8 @@ class TransactionsDetailPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final transaction = transactions[index];
           final amountText = transaction.type == TransactionType.income
-              ? '+\Rp.${transaction.amount}'
-              : '-\Rp.${transaction.amount}';
+              ? '+\$${transaction.amount}'
+              : '-\$${transaction.amount}';
           final formattedDate = DateFormat.yMMMd().format(transaction.date);
 
           return ListTile(
