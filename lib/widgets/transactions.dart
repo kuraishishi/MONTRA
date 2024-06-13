@@ -184,7 +184,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Rp.${calculateTotalIncome(filteredTransactions).toStringAsFixed(2)}',
+                    '\$${calculateTotalIncome(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
@@ -194,7 +194,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Rp.${calculateTotalExpense(filteredTransactions).toStringAsFixed(2)}',
+                    '\$${calculateTotalExpense(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
@@ -204,7 +204,7 @@ class _TransactionsState extends State<Transactions> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Rp.${calculateBalance(filteredTransactions).toStringAsFixed(2)}',
+                    '\$${calculateBalance(filteredTransactions).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -258,8 +258,8 @@ class TransactionsDetailPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final transaction = transactions[index];
           final amountText = transaction.type == TransactionType.income
-              ? '+Rp.${transaction.amount}'
-              : '-Rp.${transaction.amount}';
+              ? '+\Rp.${transaction.amount}'
+              : '-\Rp.${transaction.amount}';
           final formattedDate = DateFormat.yMMMd().format(transaction.date);
 
           return ListTile(
